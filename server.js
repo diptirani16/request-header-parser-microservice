@@ -5,6 +5,7 @@
 require('dotenv').config();
 var express = require('express');
 var app = express();
+const os = require('os');
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -25,9 +26,19 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get('/api/whoami', (req, res) => {
+    // console.log(os.networkInterfaces())
+    // console.log(req.rawHeaders[7]);
+    // console.log(req.rawHeaders[3]);
+    res.json({
+        ipaddress: os.networkInterfaces().wlp19s0[0].address,
+        language: req.rawHeaders[7],
+        software: req.rawHeaders[3]
+    })
+})
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+var listener = app.listen(3000, function () {
+  console.log('Your app is listening on port ' + 3000);
 });
